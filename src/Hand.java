@@ -31,15 +31,28 @@ public class Hand {
     }
 
     public void sortHand(){
+        boolean after;
         List<Card> temp = new ArrayList<>();
         for(Card card:hand){
+            if(card == hand.get(0)){
+                temp.add(card);
+                continue;
+            }
+            after = false;
             for(Card c:temp){
                 if(card.Number()<c.Number()){
-                    temp.add(c.Number()-1,card);
+                    temp.add(temp.indexOf(c),card);
+                    after = false;
                     break;
+                }else{
+                    after = true;
                 }
             }
+            if(after){
+                temp.add(card);
+            }
         }
+        hand = temp;
     }
 
 }
