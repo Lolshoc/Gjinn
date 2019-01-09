@@ -26,13 +26,20 @@ public class Card {
     private Suit suit;
     private Number number;
 
+    private boolean booked = false;
+
     public Card(Suit suit, Number number){
         this.suit = suit;
         this.number = number;
     }
 
+    //prints card
     public void print(){
-        System.out.println(number+" of "+suit);
+        if(booked){
+            System.out.println(number+" of "+suit+"  (booked)");
+        }else {
+            System.out.println(number + " of " + suit);
+        }
     }
 
     public Suit getSuit() {
@@ -43,6 +50,7 @@ public class Card {
         return number;
     }
 
+    //gets int for Number value
     public int Number() {
         switch (number){
             case ace:
@@ -73,6 +81,14 @@ public class Card {
                 return 13;
         }
         return 0;
+    }
+
+    public boolean isBooked() {
+        return booked;
+    }
+
+    public void setBooked(boolean booked) {
+        this.booked = booked;
     }
 
 }
