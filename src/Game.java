@@ -12,6 +12,8 @@ public class Game {
     private Deck discardPile = new Deck(false);
     private Hand playerOne = new Hand();
     private Hand playerTwo = new Hand();
+    private int playerOneScore = 0;
+    private int playerTwoScore = 0;
 
     private boolean exit = false;
 
@@ -21,6 +23,15 @@ public class Game {
 
     //initiates the game state
     private Game(){
+        init();
+    }
+
+    //sets up the game
+    private void init(){
+        playerOne.getHand().clear();
+        playerTwo.getHand().clear();
+        gameDeck.getDeck().clear();
+        discardPile.getDeck().clear();
         for(int i=0;i<7;i++){
             playerOne.draw(gameDeck.deal());
             playerTwo.draw(gameDeck.deal());
@@ -61,8 +72,36 @@ public class Game {
         }
         if(victory(playerOne)){
             System.out.println("PLAYER ONE WINS!");
+            for(Card card:playerTwo.getHand()){
+                if(!card.isBooked()){
+                    playerTwoScore += card.Number();
+                }
+            }
         }else if(victory(playerTwo)){
             System.out.println("PLAYER TWO WINS!");
+            for(Card card:playerOne.getHand()){
+                if(!card.isBooked()){
+                    playerOneScore += card.Number();
+                }
+            }
+        }
+        printScore();
+        String answer = "";
+        while(!(answer.equals("y")||answer.equals("n"))){
+            System.out.print("Play again? y/n: ");
+            answer = myScanner.next();
+        }
+        if(answer.equals("y")){
+            init();
+        }else{
+            if(playerOneScore<playerTwoScore){
+                System.out.println("PLAYER ONE WINS!");
+            }else if(playerTwoScore<playerOneScore){
+                System.out.println("PLAYER TWO WINS!");
+            }else{
+                System.out.println("ITS A TIE!");
+            }
+            System.out.println("Goodbye!");
         }
     }
 
@@ -242,6 +281,12 @@ public class Game {
                 index++;
             }
         }
+    }
+
+    //prints the score
+    private void printScore(){
+        System.out.println("Player One has "+playerOneScore+" points!");
+        System.out.println("Player Two has "+playerTwoScore+" points!");
     }
 
 }
