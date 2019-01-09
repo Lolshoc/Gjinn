@@ -1,5 +1,6 @@
 public class Card {
 
+    //card suit
     public enum Suit{
         clubs,
         diamonds,
@@ -7,6 +8,7 @@ public class Card {
         hearts
     }
 
+    //card number
     public enum Number{
         ace,
         two,
